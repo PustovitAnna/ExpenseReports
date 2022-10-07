@@ -3,9 +3,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
+import java.io.File;
 
 public class MonthlyReport {
-    private HashMap<Integer, ArrayList<Expense>> monthlyExpenses;
+    private Map<Integer, List<Expense>> monthlyExpenses;
 
     public MonthlyReport(){
         monthlyExpenses = new HashMap<>();
@@ -35,7 +38,7 @@ public class MonthlyReport {
             System.out.println("Данных об указанном месяце нет.");
             return sum;
         }
-        ArrayList<Expense> exp = monthlyExpenses.get(monthNumber);
+        List<Expense> exp = monthlyExpenses.get(monthNumber);
         for (int i  = 0; i < exp.size(); i++){
             if(exp.get(i).is_expense == isItExpense){
                 sum += exp.get(i).quantity * exp.get(i).sum_of_one;
@@ -54,7 +57,7 @@ public class MonthlyReport {
             System.out.println("Данных об указанном месяце нет.");
             return;
         }
-        ArrayList<Expense> exp = monthlyExpenses.get(monthNumber);
+        List<Expense> exp = monthlyExpenses.get(monthNumber);
         for (int i  = 0; i < exp.size(); i++){
             double sum1 = 0;
             if(exp.get(i).is_expense == false){
@@ -82,7 +85,8 @@ public class MonthlyReport {
     }
 
     private static String readFileContentsOrNull(int monthNumber) {
-        String path = ("resources/m.20210" + monthNumber + ".csv");
+        String fileSeparator = File.separator;
+        String path = ("resources" + fileSeparator + "m.20210" + monthNumber + ".csv");
         try {
             return Files.readString(Path.of(path));
         } catch (IOException e) {
@@ -91,13 +95,13 @@ public class MonthlyReport {
         }
     }
 
-    public class Expense {
+    private class Expense {
         String item_name;
         boolean is_expense;
         int quantity;
         double sum_of_one;
 
-        public Expense(String item_name, boolean is_expense, int quantity, double sum_of_one){
+        private Expense(String item_name, boolean is_expense, int quantity, double sum_of_one){
             this.item_name = item_name;
             this.is_expense = is_expense;
             this.quantity = quantity;

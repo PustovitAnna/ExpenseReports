@@ -3,19 +3,22 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
+import java.io.File;
 
 public class YearlyReport {
-    private HashMap<Integer, ArrayList<Report>> monthReports;
+    private Map<Integer, List<Report>> monthReports;
 
     public YearlyReport(){
         monthReports = new HashMap<>();
     }
 
-    class Report {
+    private class Report {
         double amount;
         boolean is_expense;
 
-        public Report(double amount, boolean is_expense) {
+        private Report(double amount, boolean is_expense) {
             this.amount = amount;
             this.is_expense = is_expense;
         }
@@ -23,7 +26,7 @@ public class YearlyReport {
 
     public double getReportOfMonth(int monthNumber, boolean isItExpense){
         double rep = 0;
-        ArrayList<Report> report = monthReports.get(monthNumber);
+        List<Report> report = monthReports.get(monthNumber);
         for (int i  = 0; i < report.size(); i++){
             if(report.get(i).is_expense == isItExpense){
                 rep = report.get(i).amount;
@@ -74,7 +77,8 @@ public class YearlyReport {
     }
 
     private static String readFileContentsOrNull(int year) {
-        String path = "resources/y." + year + ".csv";
+        String fileSeparator = File.separator;
+        String path = "resources" + fileSeparator + "y." + year + ".csv";
         try {
             return Files.readString(Path.of(path));
         } catch (IOException e) {

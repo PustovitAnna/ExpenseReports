@@ -30,7 +30,11 @@ public class Main {
                 }
                 isReadYear = true;
             } else if (userInput == 3) {        //сверка месячных отчетов
-                compareMonthsReport(monthlyReport, yearlyReport);
+                if(isReadMonth  == true && isReadYear == true) {
+                    compareMonthsReport(monthlyReport, yearlyReport);
+                } else{
+                    System.out.println("Данных об указанном месяце нет.");
+                }
             } else if(userInput == 4){          // вывод информации по месяцам
                 for (int i = 1; i <= MONTH_PASS; i++) {
                     System.out.println(getNameOfMonth(i));
@@ -38,7 +42,11 @@ public class Main {
                     System.out.println();
                 }
             } else if(userInput == 5){          // отчет за год
-                yearlyReport.getInformationAboutReport(CURRENT_YEAR);
+                if(isReadMonth  == true && isReadYear == true) {
+                    yearlyReport.getInformationAboutReport(CURRENT_YEAR);
+                } else {
+                    System.out.println("Отчет не был загружен.");
+                }
             } else if (userInput == 0) {
                 System.out.println("Программа завершена.");
                 break;
